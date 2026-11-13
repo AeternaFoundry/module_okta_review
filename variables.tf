@@ -17,5 +17,13 @@ EOT
     reviewer_id    = string
     reviewer_level = optional(string)
   }))
+  validation {
+    condition = alltrue([
+      for k, v in var.reviews : (
+        length(v.review_ids) <= 1
+      )
+    ])
+    error_message = "must have at most 1 elements"
+  }
 }
 
